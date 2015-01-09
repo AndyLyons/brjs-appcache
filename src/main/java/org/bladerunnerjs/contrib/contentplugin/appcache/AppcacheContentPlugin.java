@@ -1,5 +1,6 @@
 package org.bladerunnerjs.contrib.contentplugin.appcache;
 
+import org.bladerunnerjs.model.Aspect;
 import org.bladerunnerjs.model.BRJS;
 import org.bladerunnerjs.model.BundleSet;
 import org.bladerunnerjs.model.ParsedContentPath;
@@ -92,8 +93,8 @@ public class AppcacheContentPlugin extends AbstractContentPlugin
         try {
         	String version = getVersion(bundleSet, requestMode, brjsVersion);
         	AppcacheManifestBuilder manifestBuilder = new AppcacheManifestBuilder(brjs, bundleSet, brjsVersion, version, requestMode);
-
-            content = manifestBuilder.getManifest(requestMode);
+        	Aspect aspect = brjs.locateAncestorNodeOfClass(bundleSet.getBundlableNode(), Aspect.class);
+            content = manifestBuilder.getManifest(aspect, requestMode);
         } catch (ConfigException | PropertiesException | MalformedTokenException e) {
             e.printStackTrace();
         }
